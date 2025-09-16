@@ -16,7 +16,19 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const path = require('path');
+// serve index.html when visiting "/"
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+
 const otps = {}; // in-memory OTP store (for demo only)
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 
 app.post('/api/send-otp', async (req, res) => {
   const { email } = req.body;
@@ -66,3 +78,4 @@ app.post('/api/verify-otp', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
